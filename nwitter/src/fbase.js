@@ -1,10 +1,6 @@
-// Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import "firebase/compat/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -14,4 +10,9 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_APP_ID,
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
-export default firebase.initializeApp(firebaseConfig);
+
+// 파이어베이스 초기화
+// 참조 필요없으니 export 안함
+firebase.initializeApp(firebaseConfig);
+// 로그인은 참조 할것이니 export 진행
+export const authService = firebase.auth();
