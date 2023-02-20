@@ -50,7 +50,7 @@ const Auth = () => {
     const toggleAccount = () => setNewAccount((prev) => !prev);
 
     // 소셜 클릭
-    const onSocialClick = (event) => {
+    const onSocialClick = async (event) => {
         // ES6
         const {
             target: { name },
@@ -63,6 +63,8 @@ const Auth = () => {
         } else if (name == "github") {
             provider = new firebaseInstance.auth.GithubAuthProvider();
         }
+        const data = await authService.signInWithPopup(provider);
+        console.log(data);
     };
     return (
         <div>
