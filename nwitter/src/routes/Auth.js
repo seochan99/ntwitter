@@ -5,6 +5,7 @@ const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [newAccount, setNewAccount] = useState(true);
+    const [error, setError] = useState("");
 
     const onChange = (event) => {
         const {
@@ -41,7 +42,7 @@ const Auth = () => {
             }
             console.log(data);
         } catch (error) {
-            console.log(error);
+            setError(error.message);
         }
     };
 
@@ -68,6 +69,8 @@ const Auth = () => {
                     type="submit"
                     value={newAccount ? "Create Account" : "Log In"}
                 />
+                {/* 에러메세지 뜨게해줌 */}
+                {error}
             </form>
             <div>
                 <button>Contunue With Google</button>
