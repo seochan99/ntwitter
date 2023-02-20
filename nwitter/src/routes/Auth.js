@@ -1,3 +1,4 @@
+import { authService } from "fbase";
 import { useState } from "react";
 
 const Auth = () => {
@@ -18,13 +19,29 @@ const Auth = () => {
         }
     };
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         // 새로고침을 막아줌
         event.preventDefault();
-        if (newAccount) {
-            // create New Acc
-        } else {
-            // Log in
+        try {
+            let data;
+            if (newAccount) {
+                // create New Acc
+                // 이메일, 패스워드를 넘겨줘서 회원가입시킴
+                data = await authService.createUserWithEmailAndPassword(
+                    email,
+                    password
+                );
+            } else {
+                // Log in
+                // 이메일, 패스워드를 넘겨줘서 로그인가능한지 확인함
+                data = await authService.signInWithEmailAndPassword(
+                    email,
+                    password
+                );
+            }
+            console.log(data);
+        } catch (error) {
+            console.log(error);
         }
     };
 
