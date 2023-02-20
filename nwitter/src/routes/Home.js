@@ -9,15 +9,18 @@ const Home = () => {
         // DB설정
         // add에는 원하는 데이터 넣기 가능
         try {
+            // coolect 추가하기
             const docRef = await addDoc(collection(dbService, "nweets"), {
                 nweet,
                 createdAt: Date.now(),
             });
+            // 작성자 아이디
             console.log("Document written with ID: ", docRef.id);
         } catch (error) {
+            // 에러메세지
             console.error("Error adding document: ", error);
         }
-
+        // 빈문자열로 초기화
         setNweet("");
     };
     const onChange = (event) => {
