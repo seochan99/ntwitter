@@ -14,5 +14,8 @@ const firebaseConfig = {
 // 파이어베이스 초기화
 // 참조 필요없으니 export 안함
 firebase.initializeApp(firebaseConfig);
+
+export const firebaseInstance = firebase;
+
 // 로그인은 참조 할것이니 export 진행
 export const authService = firebase.auth();

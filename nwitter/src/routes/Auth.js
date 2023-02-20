@@ -1,4 +1,4 @@
-import { authService } from "fbase";
+import { authService, firebaseInstance } from "fbase";
 import { useState } from "react";
 
 const Auth = () => {
@@ -46,8 +46,24 @@ const Auth = () => {
         }
     };
 
+    // 로그인 관리 토글
     const toggleAccount = () => setNewAccount((prev) => !prev);
 
+    // 소셜 클릭
+    const onSocialClick = (event) => {
+        // ES6
+        const {
+            target: { name },
+        } = event;
+        // provider
+        let provider;
+        // 서비스별 제공자 가져오기
+        if (name === "google") {
+            provider = new firebaseInstance.auth.GoogleAuthProvider();
+        } else if (name == "github") {
+            provider = new firebaseInstance.auth.GithubAuthProvider();
+        }
+    };
     return (
         <div>
             <form onSubmit={onSubmit}>
@@ -78,8 +94,12 @@ const Auth = () => {
                 {newAccount ? "Log in" : "Create Account"}
             </span>
             <div>
-                <button>Contunue With Google</button>
-                <button>Contunue With Github</button>
+                <button onClick={onSocialClick} name="google">
+                    Contunue With Google
+                </button>
+                <button onClick={onSocialClick} name="github">
+                    Contunue With Github
+                </button>
             </div>
         </div>
     );
