@@ -1,12 +1,25 @@
 import AppRouter from "components/Router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { authService } from "fbase";
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
+    // 프로그램 초기화 기다리기
+    const [init, setInit] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        authService.onAuthStateChanged((user) => {
+            if (user) {
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+            setInit(true);
+        });
+    }, []);
+
     return (
         <>
-            <AppRouter isLoggedIn={isLoggedIn} />;
+            {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "Initializing"}
             <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
         </>
     );
