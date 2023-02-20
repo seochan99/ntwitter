@@ -1,4 +1,4 @@
-import AppRouter from "./Router";
+import AppRouter from "components/Router";
 import { useState } from "react";
 
 function App() {
