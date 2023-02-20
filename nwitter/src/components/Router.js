@@ -1,12 +1,21 @@
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { useState } from "react";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import Auth from "../routes/Auth";
+import Home from "../routes/Home";
 
 const AppRouter = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     return (
         <Router>
-            Switch 사용으로 여러 Route중 하나만 렌더링하게 해줌
-            <Switch>
-                <Route />
-            </Switch>
+            <Routes>
+                {isLoggedIn ? (
+                    <Route exact path="/" element={<Home />} />
+                ) : (
+                    <Route exact path="/" element={<Auth />} />
+                )}
+            </Routes>
         </Router>
     );
 };
+
+export default AppRouter;
