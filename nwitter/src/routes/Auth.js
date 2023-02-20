@@ -60,11 +60,11 @@ const Auth = () => {
         // 서비스별 제공자 가져오기
         if (name === "google") {
             provider = new firebaseInstance.auth.GoogleAuthProvider();
-        } else if (name == "github") {
+        } else if (name === "github") {
             provider = new firebaseInstance.auth.GithubAuthProvider();
         }
+        // popup뜨게 하기
         const data = await authService.signInWithPopup(provider);
-        console.log(data);
     };
     return (
         <div>
