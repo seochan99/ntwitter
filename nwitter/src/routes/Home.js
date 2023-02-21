@@ -2,7 +2,7 @@ import { dbService } from "fbase";
 import { addDoc, collection, getDocs, query } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
-const Home = () => {
+const Home = ({ userObj }) => {
     const [nweet, setNweet] = useState("");
     const [nweets, setNweets] = useState([]);
 
@@ -33,6 +33,7 @@ const Home = () => {
             const docRef = await addDoc(collection(dbService, "nweets"), {
                 nweet,
                 createdAt: Date.now(),
+                creatorId: userObj.uid,
             });
             // 작성자 아이디
             console.log("Document written with ID: ", docRef.id);
