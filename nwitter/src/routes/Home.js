@@ -6,6 +6,7 @@ const Home = () => {
     const [nweet, setNweet] = useState("");
     const [nweets, setNweets] = useState([]);
 
+    // 트윗가져오기
     const getNweets = async () => {
         const q = query(collection(dbService, "nweets"));
         const querySnapshot = await getDocs(q);
@@ -14,6 +15,7 @@ const Home = () => {
                 ...doc.data(),
                 id: doc.id,
             };
+            // nweets 설정
             setNweets((prev) => [nweetObj, ...prev]);
         });
     };
@@ -62,6 +64,7 @@ const Home = () => {
                 <input type="submit" value="Ntweet" />
             </form>
             <div>
+                {/* 트윗 뿌리기 */}
                 {nweets.map((nweet) => (
                     <div key={nweet.id}>
                         <h4>{nweet.nweet}</h4>
