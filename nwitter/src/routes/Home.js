@@ -13,6 +13,8 @@ const Home = ({ userObj }) => {
     const [nweet, setNweet] = useState("");
     const [nweets, setNweets] = useState([]);
 
+    // 이미지
+    const [attachment, setAttachment] = useState("");
     // 트윗가져오기
     // const getNweets = async () => {
     //     const q = query(collection(dbService, "nweets"));
@@ -74,7 +76,26 @@ const Home = ({ userObj }) => {
         const {
             target: { files },
         } = event;
+        // file 경로
         const theFile = files[0];
+        //  파일 미리보기
+        const reader = new FileReader();
+        // 파일위치를 URL로 반환해준다
+        // 이를 img element로 보여주면된다!
+        // 시점까지 함께 관리해줘야 URL을 얻을 수 있다./
+        // "웹 브라우저 파일을 인식 하는 시점", "웹 브라우저 팦일 인식이 끝난 시점"
+        // reader.readAsDataURL(theFile);
+        //상태관리
+        reader.onloadend = (finshedEvent) => {
+            // currentTarget - result에 url이 저장되어 있음
+            console.log(finshedEvent);
+            const {
+                currentTarget: { result },
+            } = finshedEvent;
+            setAttachment(result);
+        };
+        // 생명주기
+        reader.readAsDataURL(theFile);
     };
 
     return (
@@ -90,8 +111,10 @@ const Home = ({ userObj }) => {
                 {/* image  */}
 
                 <input type="file" accept="image/*" onChange={onFileChange} />
-
                 <input type="submit" value="Ntweet" />
+                {attachment && (
+                    <img src={attachment} width="50px" height="50px" />
+                )}
             </form>
             <div>
                 {/* 트윗 뿌리기 */}
