@@ -1,7 +1,9 @@
 const Nweet = ({ nweetObj }) => {
     return (
         <div>
-            <h4>{nweetObj.text}</h4>
+            <h4>{nweetObj.nweet}</h4>
+            <button>Delete Nweet</button>
+            <button>Edit Nweet</button>
         </div>
     );
 };
