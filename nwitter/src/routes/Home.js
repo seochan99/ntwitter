@@ -86,7 +86,11 @@ const Home = ({ userObj }) => {
             <div>
                 {/* 트윗 뿌리기 */}
                 {nweets.map((nweet) => (
-                    <Nweet key={nweet.id} nweetObj={nweet} />
+                    <Nweet
+                        key={nweet.id}
+                        nweetObj={nweet}
+                        isOwner={nweet.creatorId === userObj.uid}
+                    />
                 ))}
             </div>
         </div>
