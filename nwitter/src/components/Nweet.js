@@ -21,14 +21,23 @@ const Nweet = ({ nweetObj, isOwner }) => {
         }
     };
 
+    // 수정 폼 불리언값 주기
     const toggleEditing = () => setEditing((prev) => !prev);
+
+    // onchange 적용
+    const onChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setNewNweet(value);
+    };
 
     return (
         <div>
             {editing ? (
                 <>
                     <form>
-                        <input value={newNweet} required />
+                        <input onChange={onChange} value={newNweet} required />
                     </form>
                     <button onClick={toggleEditing}>Cancel</button>
                 </>
