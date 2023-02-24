@@ -98,6 +98,8 @@ const Home = ({ userObj }) => {
         reader.readAsDataURL(theFile);
     };
 
+    // 파일선택 취소 버튼, 첨부파일을 ""로 해줌
+    const onClearAttachment = () => setAttachment("");
     return (
         <div>
             <form onSubmit={onSubmit}>
@@ -113,7 +115,10 @@ const Home = ({ userObj }) => {
                 <input type="file" accept="image/*" onChange={onFileChange} />
                 <input type="submit" value="Ntweet" />
                 {attachment && (
-                    <img src={attachment} width="50px" height="50px" />
+                    <div>
+                        <img src={attachment} width="50px" height="50px" />
+                        <button onClick={onClearAttachment}>Clear</button>
+                    </div>
                 )}
             </form>
             <div>
