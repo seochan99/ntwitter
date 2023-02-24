@@ -32,12 +32,22 @@ const Nweet = ({ nweetObj, isOwner }) => {
         setNewNweet(value);
     };
 
+    // onSubmit : 디비에 새 입력값 반영
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        // onSubmit : 디비에 새 입력값 반영
+        await updateDoc(NweetTextRef, {
+            nweet: newNweet,
+        });
+        setEditing(false);
+    };
     return (
         <div>
             {editing ? (
                 <>
-                    <form>
+                    <form onSubmit={onSubmit}>
                         <input onChange={onChange} value={newNweet} required />
+                        <input type="submit" value="Update Nweet" />
                     </form>
                     <button onClick={toggleEditing}>Cancel</button>
                 </>
