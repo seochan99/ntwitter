@@ -1,3 +1,4 @@
+import Nweet from "components/Nweet";
 import { dbService } from "fbase";
 import {
     addDoc,
@@ -26,6 +27,7 @@ const Home = ({ userObj }) => {
     //     });
     // };
 
+    // realtime 트윗 적용하기
     useEffect(() => {
         const q = query(
             collection(dbService, "nweets"),
@@ -84,9 +86,7 @@ const Home = ({ userObj }) => {
             <div>
                 {/* 트윗 뿌리기 */}
                 {nweets.map((nweet) => (
-                    <div key={nweet.id}>
-                        <h4>{nweet.nweet}</h4>
-                    </div>
+                    <Nweet key={nweet.id} nweetObj={nweet} />
                 ))}
             </div>
         </div>
