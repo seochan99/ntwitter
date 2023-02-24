@@ -69,7 +69,13 @@ const Home = ({ userObj }) => {
         } = event;
         setNweet(value);
     };
-    console.log(nweets);
+
+    const onFileChange = (event) => {
+        const {
+            target: { files },
+        } = event;
+        const theFile = files[0];
+    };
 
     return (
         <div>
@@ -83,7 +89,7 @@ const Home = ({ userObj }) => {
                 />
                 {/* image  */}
 
-                <input type="file" accept="image/*" />
+                <input type="file" accept="image/*" onChange={onFileChange} />
 
                 <input type="submit" value="Ntweet" />
             </form>
