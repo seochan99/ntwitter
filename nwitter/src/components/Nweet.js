@@ -39,6 +39,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
         await updateDoc(NweetTextRef, {
             nweet: newNweet,
         });
+        // 다시 수정금지로!
         setEditing(false);
     };
     return (

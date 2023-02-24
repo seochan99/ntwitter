@@ -81,6 +81,10 @@ const Home = ({ userObj }) => {
                     placeholder="What's on your mind?"
                     maxLength={120}
                 />
+                {/* image  */}
+
+                <input type="file" accept="image/*" />
+
                 <input type="submit" value="Ntweet" />
             </form>
             <div>
