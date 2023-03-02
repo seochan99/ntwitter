@@ -1,5 +1,7 @@
 import Nweet from "components/Nweet";
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
+import { ref, uploadString, getDownloadURL } from "@firebase/storage";
+
 import {
     addDoc,
     collection,
@@ -8,6 +10,7 @@ import {
     orderBy,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import { v4 } from "uuid";
 
 const Home = ({ userObj }) => {
     const [nweet, setNweet] = useState("");
@@ -45,25 +48,41 @@ const Home = ({ userObj }) => {
     }, []);
 
     // 제출시
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        // DB설정
-        // add에는 원하는 데이터 넣기 가능
-        try {
-            // coolect 추가하기
-            const docRef = await addDoc(collection(dbService, "nweets"), {
-                nweet,
-                createdAt: Date.now(),
-                creatorId: userObj.uid,
-            });
-            // 작성자 아이디
-            console.log("Document written with ID: ", docRef.id);
-        } catch (error) {
-            // 에러메세지
-            console.error("Error adding document: ", error);
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        let attachmentUrl = "";
+
+        //이미지 첨부하지 않고 텍스트만 올리고 싶을 때도 있기 때문에 attachment가 있을때만 아래 코드 실행
+        //이미지 첨부하지 않은 경우엔 attachmentUrl=""이 된다.
+        if (attachment !== "") {
+            //파일 경로 참조 만들기
+            const attachmentRef = ref(storageService, `${userObj.uid}/${v4()}`);
+            //storage 참조 경로로 파일 업로드 하기
+            const response = await uploadString(
+                attachmentRef,
+                attachment,
+                "data_url"
+            );
+            //storage 참조 경로에 있는 파일의 URL을 다운로드해서 attachmentUrl 변수에 넣어서 업데이트
+            attachmentUrl = await getDownloadURL(response.ref);
         }
-        // 빈문자열로 초기화
+
+        //트윗 오브젝트
+        const nweetObj = {
+            text: nweet,
+            createdAt: Date.now(),
+            creatorId: userObj.uid,
+            attachmentUrl,
+        };
+
+        //트윗하기 누르면 nweetObj 형태로 새로운 document 생성하여 nweets 콜렉션에 넣기
+        await addDoc(collection(dbService, "nweets"), nweetObj);
+
+        //state 비워서 form 비우기
         setNweet("");
+
+        //파일 미리보기 img src 비워주기
+        setAttachment("");
     };
     const onChange = (event) => {
         const {

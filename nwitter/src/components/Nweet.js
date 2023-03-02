@@ -55,6 +55,13 @@ const Nweet = ({ nweetObj, isOwner }) => {
             ) : (
                 <>
                     <h4>{nweetObj.nweet}</h4>
+                    {nweetObj.attachmentUrl && (
+                        <img
+                            src={nweetObj.attachmentUrl}
+                            width="50px"
+                            height="50px"
+                        />
+                    )}
                     {/* isOwner가 True일때 아래 보이게 */}
                     {isOwner && (
                         <>
