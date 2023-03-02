@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { dbService } from "fbase";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { deleteObject, ref } from "@firebase/storage";
+import { storageService } from "../fbase";
 
 const Nweet = ({ nweetObj, isOwner }) => {
     // edit
@@ -18,6 +20,10 @@ const Nweet = ({ nweetObj, isOwner }) => {
         if (ok) {
             // 삭제 진행
             await deleteDoc(NweetTextRef);
+            if (nweetObj.attachmentUrl !== "") {
+                // 첨부파일도 삭제 진행
+                await deleteObject(ref(storageService, nweetObj.attachmentUrl));
+            }
         }
     };
 
